@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: pulse-vehicle-sim
+Version: 0.1.0
+Summary: Vehicle movement simulation for testing
+Requires-Python: >=3.11
+Requires-Dist: click>=8.1
+Requires-Dist: aiofiles>=24.1
+Requires-Dist: aiohttp>=3.9
+Requires-Dist: msgspec>=0.18

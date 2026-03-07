@@ -1,0 +1,14 @@
+[project]
+name = "pulse-vehicle-sim"
+version = "0.1.0"
+description = "Vehicle movement simulation for testing"
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+    "aiofiles>=24.1",
+    "aiohttp>=3.9",
+    "msgspec>=0.18",
+]
+
+[project.scripts]
+pulse-sim = "vehicle_sim.cli:main"
