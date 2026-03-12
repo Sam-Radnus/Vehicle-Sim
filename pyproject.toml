@@ -8,7 +8,11 @@ dependencies = [
     "aiofiles>=24.1",
     "aiohttp>=3.9",
     "msgspec>=0.18",
+    "tornado>=6.4",
 ]
+
+[tool.setuptools.packages.find]
+include = ["vehicle_sim*"]
 
 [project.scripts]
 pulse-sim = "vehicle_sim.cli:main"

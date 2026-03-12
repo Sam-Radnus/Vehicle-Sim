@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import aiohttp
 import msgspec
 
@@ -39,7 +40,7 @@ class ApiWriter:
             ) as resp:
                 if resp.status >= 400:
                     print(f"[api_writer] POST failed: {resp.status}")
-        except aiohttp.ClientError as e:
+        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
             print(f"[api_writer] request error: {e}")
         self._buffer.clear()
 

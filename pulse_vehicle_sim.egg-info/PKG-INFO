@@ -7,3 +7,4 @@ Requires-Dist: click>=8.1
 Requires-Dist: aiofiles>=24.1
 Requires-Dist: aiohttp>=3.9
 Requires-Dist: msgspec>=0.18
+Requires-Dist: tornado>=6.4
