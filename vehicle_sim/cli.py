@@ -8,7 +8,7 @@ import click
 
 from .geo import CITIES
 from .simulator import simulate
-from .writers.api_writer import ApiWriter
+from .writers.api_writer import WsWriter
 from .writers.file_writer import FileWriter
 
 CITY_NAMES = list(CITIES.keys())
@@ -33,14 +33,13 @@ def cli() -> None:
 @click.option(
     "--writer",
     "writer_type",
-    type=click.Choice(["file", "api"], case_sensitive=False),
+    type=click.Choice(["file", "ws"], case_sensitive=False),
     default="file",
     help="Position writer backend.",
 )
 @click.option("--log-dir", default="logs", help="Directory for log files (file writer).")
 @click.option("--max-file-mb", default=10, type=int, help="Max log file size in MB before rotation.")
-@click.option("--api-endpoint", default="http://localhost:8888/api/position", help="API endpoint (api writer).")
-@click.option("--api-batch-size", default=50, type=int, help="Batch size for API writes.")
+@click.option("--ws-endpoint", default="ws://localhost:8000/ws/set_current_location", help="WebSocket endpoint (ws writer).")
 @click.option("--radius", default=None, type=float, help="Radius in km from city center to distribute vehicles. Default: use full city bounding box.")
 def run(
     vehicles: int,
@@ -51,8 +50,7 @@ def run(
     writer_type: str,
     log_dir: str,
     max_file_mb: int,
-    api_endpoint: str,
-    api_batch_size: int,
+    ws_endpoint: str,
     radius: float | None,
 ) -> None:
     """Simulate N vehicles moving along real roads in US cities."""
@@ -60,8 +58,8 @@ def run(
         writer = FileWriter(log_dir=log_dir, max_file_bytes=max_file_mb * 1024 * 1024)
         click.echo(f"[config] Writer: file -> {log_dir}/ (rotate at {max_file_mb} MB)")
     else:
-        writer = ApiWriter(endpoint=api_endpoint, batch_size=api_batch_size)
-        click.echo(f"[config] Writer: api -> {api_endpoint} (batch={api_batch_size})")
+        writer = WsWriter(endpoint=ws_endpoint)
+        click.echo(f"[config] Writer: ws -> {ws_endpoint}")
 
     city_label = city or "all cities"
     radius_label = f", Radius: {radius} km" if radius else ""
@@ -71,14 +69,6 @@ def run(
     )
 
     asyncio.run(simulate(vehicles, writer, ping_min, ping_max, drop_rate, city, radius))
-
-
-@cli.command()
-@click.option("--port", default=8888, type=int, help="Server port.")
-def serve(port: int) -> None:
-    """Start the WebSocket relay server for the dashboard UI."""
-    from .server import run_server
-    run_server(port=port)
 
 
 def main() -> None:
