@@ -2,4 +2,3 @@ click>=8.1
 aiofiles>=24.1
 aiohttp>=3.9
 msgspec>=0.18
-tornado>=6.4

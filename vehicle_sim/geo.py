@@ -22,7 +22,7 @@ CITIES: dict[str, tuple[float, float, float, float]] = {
     "denver":        (39.6800, 39.7800, -105.0200, -104.9000),
 }
 
-OSRM_BASE = "https://router.project-osrm.org/route/v1/driving"
+OSRM_BASE = "http://router.project-osrm.org/route/v1/driving"
 
 
 def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:

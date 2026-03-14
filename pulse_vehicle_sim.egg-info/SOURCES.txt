@@ -8,7 +8,6 @@ pulse_vehicle_sim.egg-info/top_level.txt
 vehicle_sim/__init__.py
 vehicle_sim/cli.py
 vehicle_sim/geo.py
-vehicle_sim/server.py
 vehicle_sim/simulator.py
 vehicle_sim/vehicle.py
 vehicle_sim/writers/__init__.py
